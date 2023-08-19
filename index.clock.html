@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .clock {
+    width: 200px;
+    height: 200px;
+    border: 10px solid #333;
+    border-radius: 50%;
+    position: relative;
+  }
+  
+  .hour, .minute, .second {
+    position: absolute;
+    width: 50%;
+    transform-origin: 15%;
+  }
+  
+  .hour {
+    height: 5px;
+    background-color: #333;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+  
+  .minute {
+    height: 3px;
+    background-color: #555;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(180deg);
+  }
+  
+  .second {
+    height: 2px;
+    background-color: #f00;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(270deg);
+  }
+  
+  #button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+  }
+</style>
+</head>
+<body>
+  <div class="clock">
+    <div class="hour" id="hour"></div>
+    <div class="minute" id="minute"></div>
+    <div class="second" id="second"></div>
+  </div>
+  <button id="button">Show Time</button>
+
+  <script>
+    const hourHand = document.getElementById('hour');
+    const minuteHand = document.getElementById('minute');
+    const secondHand = document.getElementById('second');
+    
+    function updateClock() {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+      
+      const hourDeg = (hours % 12) * 30 + (minutes / 60) * 30;
+      const minuteDeg = (minutes / 60) * 360 + (seconds / 60) * 6;
+      const secondDeg = (seconds / 60) * 360;
+      
+      hourHand.style.transform = `rotate(${hourDeg}deg)`;
+      minuteHand.style.transform = `rotate(${minuteDeg}deg)`;
+      secondHand.style.transform = `rotate(${secondDeg}deg)`;
+    }
+    
+    const button = document.getElementById('button');
+    button.addEventListener('click', () => {
+      updateClock();
+    });
+
+    setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>
